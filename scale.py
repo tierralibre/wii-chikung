@@ -155,5 +155,9 @@ def main():
         except KeyboardInterrupt:
             print("Bye!")
 
+    print("out of while loop")
+    iface.close()
+    print("closing device")
+
 if __name__ == '__main__':
     main()
