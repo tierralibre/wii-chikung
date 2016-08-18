@@ -101,8 +101,8 @@ def measurements(iface):
         iface.dispatch(event)
 
         tl = event.get_abs(2)[0]
-	print("tl")
-	print(tl)
+	#print("tl")
+	#print(tl)
         tr = event.get_abs(0)[0]
         br = event.get_abs(3)[0]
         bl = event.get_abs(1)[0]
