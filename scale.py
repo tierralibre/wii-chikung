@@ -161,7 +161,7 @@ def main():
     iface.close(xwiimote.IFACE_BALANCE_BOARD)
     print("closing device")
     #subprocess.call("bt-device --disconnect='Nintendo RVL-WBC-01'")
-    arg1 = "--disconnect='Nintendo RVL-WBC-01"
+    arg1 = "--disconnect='Nintendo RVL-WBC-01'"
     subprocess.call(["bt-device", arg1])
     # poll unregisterp.unregister(mon_fd)
     # device
