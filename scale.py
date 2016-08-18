@@ -148,6 +148,7 @@ def main():
                 c = sys.stdin.read(1)
                 if c == 'q':
                     exit = True
+                    break
 
 
 
