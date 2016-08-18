@@ -111,9 +111,11 @@ def measurements(iface):
 
 def average_mesurements(ms, max_stddev=55):
     last_measurements = RingBuffer(800)
+    print("average_meaurements called")
 
     while True:
         weight = sum(ms.next())
+        print("weight {}".format(weight))
 
         last_measurements.append(weight)
 
