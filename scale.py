@@ -140,7 +140,7 @@ def main():
     exit = False
 
     while not exit:
-        print "Type q to quit, or anything else to report your weight"
+        print("Type q to quit, or anything else to report your weight")
         c = sys.stdin.read(1)
         if c == 'q':
             exit = True
