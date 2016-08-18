@@ -156,7 +156,7 @@ def main():
             print("Bye!")
 
     print("out of while loop")
-    iface.close()
+    iface.close(xwiimote.IFACE_BALANCE_BOARD)
     print("closing device")
 
 if __name__ == '__main__':
