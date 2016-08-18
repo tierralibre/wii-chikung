@@ -136,26 +136,19 @@ def main():
     iface = xwiimote.iface(device)
     iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
-    try:
-        for m in measurements(iface):
-            print_bboard_measurements(*m)
+    
+    exit = False
 
-        print("end for m")
+    while not exit:
+        print "Type q to quit, or anything else to report your weight"
+        c = sys.stdin.read(1)
+        if c == 'q':
+            exit = True
+        try:
+            for m in measurements(iface):
+                print_bboard_measurements(*m)
 
-        for kg, err in average_mesurements(measurements(iface)):
-            pkg = "qme.seri.wiiweight.weight"
-            perr = "qme.seri.wiiweight.err"
-
-            print("{:.2f} +/- {:.2f}".format(kg/100.0, err/100.0))
-
-            kg, err = (int(round(x, 0)) for x in (kg, err))
-
-            for d, p in zip((kg, err), (pkg, perr)):
-                print(d, p)
-                util.submit(p, d)
-
-            sys.exit(0)
-            print("main.sys.exit0 called")
+  
 
 
     except KeyboardInterrupt:
