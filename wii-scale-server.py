@@ -57,9 +57,8 @@ def main(argv):
 		board = wiiboard.Wiiboard()
 		# socket sync?
 
-		if not config_address:
+		#if not config_address:
 			address = board.discover()
-		else
 			address = config_address
 			board.connect(address)
 			print "board connected address: " + address
