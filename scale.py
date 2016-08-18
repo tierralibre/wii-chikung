@@ -111,11 +111,11 @@ def measurements(iface):
 
 def average_mesurements(ms, max_stddev=55):
     last_measurements = RingBuffer(800)
-    print("average_meaurements called")
+    #print("average_meaurements called")
 
     while True:
         weight = sum(ms.next())
-        print("weight {}".format(weight))
+        #print("weight {}".format(weight))
 
         last_measurements.append(weight)
 
@@ -123,6 +123,7 @@ def average_mesurements(ms, max_stddev=55):
         stddev = numpy.std(last_measurements.data)
 
         if stddev < max_stddev and last_measurements.filled:
+            print("yield of average_measurements called")
             yield numpy.array((mean, stddev))
 
 def main():
@@ -152,6 +153,7 @@ def main():
                 util.submit(p, d)
 
             sys.exit(0)
+            print("main.sys.exit0 called")
 
 
     except KeyboardInterrupt:
