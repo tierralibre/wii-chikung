@@ -140,13 +140,16 @@ def main():
     exit = False
 
     while not exit:
-        print("Type q to quit, or anything else to report your weight")
-        c = sys.stdin.read(1)
-        if c == 'q':
-            exit = True
+        
         try:
             for m in measurements(iface):
                 print_bboard_measurements(*m)
+                print("q to exit else to continue")
+                c = sys.stdin.read(1)
+                if c == 'q':
+                    exit = True
+
+
 
         except KeyboardInterrupt:
             print("Bye!")
