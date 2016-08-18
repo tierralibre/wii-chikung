@@ -140,7 +140,7 @@ def main():
     exit = False
 
     while not exit:
-        
+        print("exit: {}", exit)
         try:
             for m in measurements(iface):
                 print_bboard_measurements(*m)
