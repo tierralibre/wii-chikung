@@ -54,12 +54,12 @@ def main(argv):
 
 	# chek if board is connected
 	if not board.isConnected():
-		board = wiiboard.Wiiboard()
+		#board = wiiboard.Wiiboard()
 		# socket sync?
 
 		#if not config_address:
 			address = board.discover()
-			address = config_address
+			#address = config_address
 			board.connect(address)
 			print "board connected address: " + address
 			total = []
