@@ -137,8 +137,10 @@ def main():
     iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
     try:
-#        for m in measurements(iface):
-#            print_bboard_measurements(*m)
+        for m in measurements(iface):
+            print_bboard_measurements(*m)
+
+        print("end for m")
 
         for kg, err in average_mesurements(measurements(iface)):
             pkg = "qme.seri.wiiweight.weight"
