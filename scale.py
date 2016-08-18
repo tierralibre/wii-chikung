@@ -148,11 +148,8 @@ def main():
             for m in measurements(iface):
                 print_bboard_measurements(*m)
 
-  
-
-
-    except KeyboardInterrupt:
-        print("Bye!")
+        except KeyboardInterrupt:
+            print("Bye!")
 
 if __name__ == '__main__':
     main()
