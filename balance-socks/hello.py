@@ -33,6 +33,21 @@ from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
 from autobahn.wamp.exception import ApplicationError
 
+###
+
+from __future__ import print_function
+
+import sys
+import time
+import select
+
+import subprocess
+
+import numpy
+import xwiimote
+
+###
+
 
 class AppSession(ApplicationSession):
 
@@ -40,6 +55,32 @@ class AppSession(ApplicationSession):
 
     @inlineCallbacks
     def onJoin(self, details):
+
+        ### balance board
+        def wait_for_balanceboard():
+            print("Waiting for balanceboard to connect..")
+            mon = xwiimote.monitor(True, False)
+            dev = None
+
+            while True:
+                mon.get_fd(True) # blocks
+                connected = mon.poll()
+
+                if connected == None:
+                    continue
+                elif dev_is_balanceboard(connected):
+                    print("Found balanceboard:", connected)
+                    dev = connected
+                    break
+                else:
+                    print("Found non-balanceboard device:", connected)
+                    print("Waiting..")
+
+            return dev
+        #
+        device = wait_for_balanceboard()
+
+        ### end balance board
 
         # SUBSCRIBE to a topic and receive events
         #
