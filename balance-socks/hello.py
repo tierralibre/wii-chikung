@@ -34,6 +34,8 @@ from autobahn.twisted.util import sleep
 from autobahn.twisted.wamp import ApplicationSession
 from autobahn.wamp.exception import ApplicationError
 
+import xwiimote
+
 ###
 
 # from __future__ import print_function
@@ -45,7 +47,7 @@ from autobahn.wamp.exception import ApplicationError
 # import subprocess
 
 # import numpy
- import xwiimote
+
 
 ###
 
