@@ -211,6 +211,9 @@ def main():
     _iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
     event = xwiimote.event()
+    while True:
+        print(_iface.get_fd())
+    
     _iface.dispatch(event)
     print(event)
 
