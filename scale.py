@@ -246,6 +246,7 @@ def main():
                     readValues.append(tl)
                     if myCount == 5:
                         break
+                    myCount += 1
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
