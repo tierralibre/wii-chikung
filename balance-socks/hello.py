@@ -161,20 +161,23 @@ class AppSession(ApplicationSession):
         ###
         def starMonitoringBoard():
             p = select.epoll.fromfd(self._iface.get_fd())
-            while True:
+            # add a buffer of 3?
+            a = []
+            for i in range(5):
                 p.poll() # blocks
                 event = xwiimote.event()
                 self.log.info("after xwiimote event creation")
                 self._iface.dispatch(event)
                 self.log.info("dispatch event")
                 tl = event.get_abs(2)[0]
-                self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
+                a.append(tl)
+                self.log.info("published to 'oncounter' with counter {tl}", tl=a)
 
                 #yield self.publish('com.example.oncounter', tl)
                 #self.log.info("published to 'oncounter' with counter {counter}",
                  #               counter=tl)
 
-                yield (tl,tr,br,bl)
+            return a
         ###
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
