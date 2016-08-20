@@ -151,6 +151,7 @@ class AppSession(ApplicationSession):
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             self.log.info("bt disconnect device")
             subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
+            elf._sendBalanceData = False
             return "Done"
 
         yield self.register(disconnect_balanceboard, 'com.example.balance.disconnect')
