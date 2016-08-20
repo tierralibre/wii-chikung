@@ -94,27 +94,35 @@ class AppSession(ApplicationSession):
         self.log.info("procedure add2() registered")
 
                 ###
+
+        def dev_is_balanceboard(dev):
+    
+            time.sleep(2) # if we check the devtype to early it is reported as 'unknown' :(
+
+            iface = xwiimote.iface(dev)
+            return iface.get_devtype() == 'balanceboard'
+
         def wait_for_balanceboard(x, y):
             #print("Waiting for balanceboard to connect..")
             self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
             mon = xwiimote.monitor(True, False)
-            #dev = None
+            dev = None
             conn = False
 
-            # while True:
-            #     #mon.get_fd(True) # blocks
-            #     #connected = mon.poll()
+            while True:
+                mon.get_fd(True) # blocks
+                connected = mon.poll()
 
-            #     if connected == None:
-            #         continue
-            #     #elif dev_is_balanceboard(connected):
-            #     #   self.log.info("found balance board: connected" )
-            #     #    dev = connected
-            #     #    conn = True
-            #     #    break
-            #     else:
-            #         self.log.info("Found non-balanceboard device::")
-            #         self.log.info("Status: {msg}", msg='waiting')
+                if connected == None:
+                    continue
+                elif dev_is_balanceboard(connected):
+                    self.log.info("found balance board: connected" )
+                    dev = connected
+                    conn = True
+                else:
+                    self.log.info("Found non-balanceboard device::")
+                    self.log.info("Status: {msg}", msg='waiting')
+                    
 
             return conn
         ###
