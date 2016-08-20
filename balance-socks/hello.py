@@ -159,6 +159,25 @@ class AppSession(ApplicationSession):
         ####
 
         ###
+        def starMonitoringBoard():
+            p = select.epoll.fromfd(self._iface.get_fd())
+            while True:
+                p.poll() # blocks
+                event = xwiimote.event()
+                self.log.info("after xwiimote event creation")
+                self._iface.dispatch(event)
+                self.log.info("dispatch event")
+                tl = event.get_abs(2)[0]
+                self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
+
+                yield self.publish('com.example.oncounter', tl)
+                self.log.info("published to 'oncounter' with counter {counter}",
+                                counter=tl)
+
+            return "monitoring"
+        ###
+        yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
+        self.log.info("procedure starMonitoringBoard() registered")
 
         # PUBLISH and CALL every second .. forever
         #
@@ -169,32 +188,20 @@ class AppSession(ApplicationSession):
             #
             if self._sendBalanceData == True:
                 self.log.info("sendHello true")
-                p = select.epoll.fromfd(self._iface.get_fd())
-                while True:
-                    p.poll() # blocks
-                    event = xwiimote.event()
-                    self.log.info("after xwiimote event creation")
-                    self._iface.dispatch(event)
-                    self.log.info("dispatch event")
-                    tl = event.get_abs(2)[0]
-                    self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
-
-                    yield self.publish('com.example.oncounter', tl)
-                    self.log.info("published to 'oncounter' with counter {counter}",
-                                counter=tl)
                 
-                counter += 1
+                
+            #    counter += 1
 
             # CALL a remote procedure
             #
-            # try:
-            #     res = yield self.call('com.example.mul2', counter, 3)
-            #     self.log.info("mul2() called lcoally with result: {result}",
-            #                   result=res)
-            # except ApplicationError as e:
-            #     # ignore errors due to the frontend not yet having
-            #     # registered the procedure we would like to call
-            #     if e.error != 'wamp.error.no_such_procedure':
-            #         raise e
+                try:
+                    res = yield self.call('com.example.balance.monitor')
+                    self.log.info("mul2() called lcoally with result: {result}",
+                                  result=res)
+                except ApplicationError as e:
+                # ignore errors due to the frontend not yet having
+                # registered the procedure we would like to call
+                    if e.error != 'wamp.error.no_such_procedure':
+                        raise e
 
             yield sleep(1)
