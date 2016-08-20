@@ -132,7 +132,7 @@ class AppSession(ApplicationSession):
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
-                        _iface = iface
+                        self._iface = iface
                         counter = "Board Found"
                         sendHello = True
                         break
@@ -145,7 +145,7 @@ class AppSession(ApplicationSession):
         ###
         def disconnect_balanceboard():
             self.log.info("closing device iface")
-            _iface.close(xwiimote.IFACE_BALANCE_BOARD)
+            self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             self.log.info("bt disconnect device")
             subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
             return "Done"
