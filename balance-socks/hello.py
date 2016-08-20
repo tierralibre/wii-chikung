@@ -160,11 +160,12 @@ class AppSession(ApplicationSession):
 
         ###
         def starMonitoringBoard():
+            self.log.info("startMonitoringBoard")
             p = select.epoll.fromfd(self._iface.get_fd())
             # add a buffer of 3?
             a = []
             for i in range(5):
-                p.poll() # blocks
+                yield p.poll() # blocks
                 event = xwiimote.event()
                 self.log.info("after xwiimote event creation")
                 self._iface.dispatch(event)
