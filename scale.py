@@ -5,7 +5,7 @@ from __future__ import print_function
 
 import sys
 import time
-import select
+from select import poll, POLLIN
 
 import subprocess
 
