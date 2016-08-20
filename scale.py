@@ -169,11 +169,11 @@ def server_proc(coro=None):
 def client_proc(server, n, coro=None):
     global msg_id
     ready = True
-    p = select.epoll.fromfd(iface.get_fd())
+    p = select.epoll.fromfd(_iface.get_fd())
     while ready:
         p.poll() # blocks
         event = xwiimote.event()
-        iface.dispatch(event)
+        _iface.dispatch(event)
 
         tl = event.get_abs(2)[0]
     #print("tl")
@@ -203,14 +203,17 @@ def main():
         device = wait_for_balanceboard()
 
     iface = xwiimote.iface(device)
-    iface.open(xwiimote.IFACE_BALANCE_BOARD)
+    self._iface = iface
+
+    _iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
 
-    # test asyncoro
+       # test asyncoro
     server = asyncoro.Coro(server_proc)
-    for i in range(10):
-        asyncoro.Coro(client_proc, server, i)
+    #for i in range(10):
+    asyncoro.Coro(client_proc, server, i)
     # end asyncoro
+ 
     
     exit = False
 
@@ -231,7 +234,7 @@ def main():
             print("Bye!")
 
     print("closing device iface")
-    iface.close(xwiimote.IFACE_BALANCE_BOARD)
+    _iface.close(xwiimote.IFACE_BALANCE_BOARD)
     print("bt disconnect device")
     subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
     #subprocess.call(arg1)
