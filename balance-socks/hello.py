@@ -45,7 +45,7 @@ from autobahn.wamp.exception import ApplicationError
 # import subprocess
 
 # import numpy
-# import xwiimote
+ import xwiimote
 
 ###
 
@@ -53,6 +53,8 @@ from autobahn.wamp.exception import ApplicationError
 class AppSession(ApplicationSession):
 
     log = Logger()
+    dev = None
+    mon = None
 
     ###
     ### balance board
@@ -74,6 +76,9 @@ class AppSession(ApplicationSession):
         def onhello(msg):
             self.log.info("event for 'onhello' received: {msg}", msg=msg)
 
+
+
+
         yield self.subscribe(onhello, 'com.example.onhello')
         self.log.info("subscribed to topic 'onhello'")
 
@@ -85,6 +90,34 @@ class AppSession(ApplicationSession):
 
         yield self.register(add2, 'com.example.add2')
         self.log.info("procedure add2() registered")
+
+                ###
+        def wait_for_balanceboard(x, y):
+            #print("Waiting for balanceboard to connect..")
+            msg = 'test message local'
+            self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
+            mon = xwiimote.monitor(True, False)
+            #dev = None
+
+            while True:
+                mon.get_fd(True) # blocks
+                connected = mon.poll()
+
+                if connected == None:
+                    continue
+                elif dev_is_balanceboard(connected):
+                    self.log.info("found balance board: connected" )
+                    dev = connected
+                    break
+                else:
+                    self.log.info("Found non-balanceboard device::")
+                    self.log.info("Status: {msg}", msg='waiting')
+
+            #return dev
+        ###
+        yield self.register(wait_for_balanceboard, 'com.example.balance')
+        self.log.info("procedure wait_for_balanceboard() registered")
+        ###
 
         # PUBLISH and CALL every second .. forever
         #
