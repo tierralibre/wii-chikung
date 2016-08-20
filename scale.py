@@ -237,7 +237,7 @@ def main():
                 print("Watch")
             else:
                 print("event type: {}"),format(evt.type)
-                print(evt)
+                print(evt.type)
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
