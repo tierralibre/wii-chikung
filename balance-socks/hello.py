@@ -165,7 +165,7 @@ class AppSession(ApplicationSession):
             # add a buffer of 3?
             a = []
             for i in range(5):
-                yield p.poll() # blocks
+                p.poll() # blocks
                 event = xwiimote.event()
                 self.log.info("after xwiimote event creation")
                 self._iface.dispatch(event)
@@ -178,7 +178,7 @@ class AppSession(ApplicationSession):
                 #self.log.info("published to 'oncounter' with counter {counter}",
                  #               counter=tl)
 
-            return a
+            #return a
         ###
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
