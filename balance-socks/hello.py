@@ -82,7 +82,7 @@ class AppSession(ApplicationSession):
 
         
         #
-        device = wait_for_balanceboard()
+        #device = wait_for_balanceboard()
 
         ### end balance board
 
