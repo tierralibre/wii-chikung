@@ -112,6 +112,7 @@ class AppSession(ApplicationSession):
             mon = xwiimote.monitor(True, False)
             dev = None
             conn = False
+            counter = 0
             self.log.info("before wait for balance while loop" )
             while True:
                 mon.get_fd(True) # blocks
@@ -128,10 +129,11 @@ class AppSession(ApplicationSession):
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
+                        counter = 1
                         break
                     
             #return true
-            #yield conn
+            return counter
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
