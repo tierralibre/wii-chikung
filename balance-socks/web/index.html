@@ -79,6 +79,7 @@
             };
 
          this.callBalance  = function (){
+               console.log("callBalance() waiting for board connection");
                connection.session.call('com.example.balance', [x, 18]).then(
                   function (res) {
                      console.log("callBalance() result:", res);
