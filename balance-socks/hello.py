@@ -115,16 +115,18 @@ class AppSession(ApplicationSession):
                 self.log.info("in for balance while loop" )
 
                 if connected == None:
+                    self.log.info("wating for connection" )
                     continue
                 else:
                     # so wea are connected
                     time.sleep(2) # if we check the devtype to early it is reported as 'unknown' :(
                     iface = xwiimote.iface(connected)
                     if iface.get_devtype() == 'balanceboard':
-                        yield self.publish('com.example.oncounter', "balanceBoard connected")
+                        #yield self.publish('com.example.oncounter', "balanceBoard connected")
+                        self.log.info("found balance board" )
                         break
                     
-
+            #return true
             #yield conn
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
