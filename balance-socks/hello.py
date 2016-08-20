@@ -62,6 +62,8 @@ class AppSession(ApplicationSession):
     dev = None
     mon = None
     _iface = None
+    _connected = None
+    _sendBalanceData = False
 
     ###
     ### balance board
@@ -129,12 +131,13 @@ class AppSession(ApplicationSession):
                     # so wea are connected
                     time.sleep(2) # if we check the devtype to early it is reported as 'unknown' :(
                     iface = xwiimote.iface(connected)
+                    #_connected = connected
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
                         self._iface = iface
                         counter = "Board Found"
-                        sendHello = True
+                        self._sendBalanceData = True
                         break
                     
             #return true
@@ -163,7 +166,7 @@ class AppSession(ApplicationSession):
             #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
-            if sendHello == True:
+            if self._sendBalanceData == True:
                 self.log.info("sendHello true")
                 yield self.publish('com.example.oncounter', counter)
                 self.log.info("published to 'oncounter' with counter {counter}",
