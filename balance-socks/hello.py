@@ -170,11 +170,11 @@ class AppSession(ApplicationSession):
                 tl = event.get_abs(2)[0]
                 self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
 
-                yield self.publish('com.example.oncounter', tl)
-                self.log.info("published to 'oncounter' with counter {counter}",
-                                counter=tl)
+                #yield self.publish('com.example.oncounter', tl)
+                #self.log.info("published to 'oncounter' with counter {counter}",
+                 #               counter=tl)
 
-            #return "monitoring"
+                yield (tl,tr,br,bl)
         ###
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
