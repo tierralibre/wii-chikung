@@ -199,16 +199,16 @@ def client_proc(server, n, coro=None):
 
 ##
 def main():
+    global _iface
 
     if len(sys.argv) == 2:
         device = sys.argv[1]
     else:
         device = wait_for_balanceboard()
 
-    iface = xwiimote.iface(device)
-    _iface = iface
+    _iface = xwiimote.iface(device)
 
-    iface.open(xwiimote.IFACE_BALANCE_BOARD)
+    _iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
 
        # test asyncoro
@@ -218,18 +218,18 @@ def main():
     # end asyncoro
  
     
-    exit = False
+    #exit = False
 
-    while not exit:
-        print("exit: {}", exit)
-        try:
-            for m in measurements(iface):
-                print_bboard_measurements(*m)
-                print("q to exit else to continue")
-                c = sys.stdin.read(1)
-                if c == 'q':
-                    exit = True
-                    break
+    # while not exit:
+    #     print("exit: {}", exit)
+    #     try:
+    #         for m in measurements(iface):
+    #             print_bboard_measurements(*m)
+    #             print("q to exit else to continue")
+    #             c = sys.stdin.read(1)
+    #             if c == 'q':
+    #                 exit = True
+    #                 break
 
 
 
