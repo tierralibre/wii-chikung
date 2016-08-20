@@ -174,7 +174,7 @@ class AppSession(ApplicationSession):
                 self.log.info("published to 'oncounter' with counter {counter}",
                                 counter=tl)
 
-            return "monitoring"
+            #return "monitoring"
         ###
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
