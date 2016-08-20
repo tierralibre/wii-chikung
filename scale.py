@@ -172,7 +172,7 @@ def client_proc(server, n, coro=None):
     ready = True
     global _iface
     p = select.epoll.fromfd(_iface.get_fd())
-    while ready:
+    #while ready:
         p.poll() # blocks
         event = xwiimote.event()
         _iface.dispatch(event)
@@ -183,7 +183,7 @@ def client_proc(server, n, coro=None):
         tr = event.get_abs(0)[0]
         br = event.get_abs(3)[0]
         bl = event.get_abs(1)[0]
-        #yield (tl,tr,br,bl)
+        yield (tl,tr,br,bl) # if not error this is not a generator
         server.send('tl: {} tr: {} br: {} bl: {}'.format(tl, tr, br, bl))
 
 
