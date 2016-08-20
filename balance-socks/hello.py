@@ -94,26 +94,27 @@ class AppSession(ApplicationSession):
                 ###
         def wait_for_balanceboard(x, y):
             #print("Waiting for balanceboard to connect..")
-            msg = 'test message local'
             self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
             mon = xwiimote.monitor(True, False)
             #dev = None
+            conn = False
 
-            while True:
-                mon.get_fd(True) # blocks
-                connected = mon.poll()
+            # while True:
+            #     #mon.get_fd(True) # blocks
+            #     #connected = mon.poll()
 
-                if connected == None:
-                    continue
-                elif dev_is_balanceboard(connected):
-                    self.log.info("found balance board: connected" )
-                    dev = connected
-                    break
-                else:
-                    self.log.info("Found non-balanceboard device::")
-                    self.log.info("Status: {msg}", msg='waiting')
+            #     if connected == None:
+            #         continue
+            #     #elif dev_is_balanceboard(connected):
+            #     #   self.log.info("found balance board: connected" )
+            #     #    dev = connected
+            #     #    conn = True
+            #     #    break
+            #     else:
+            #         self.log.info("Found non-balanceboard device::")
+            #         self.log.info("Status: {msg}", msg='waiting')
 
-            #return dev
+            return conn
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
