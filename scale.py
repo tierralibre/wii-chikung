@@ -241,10 +241,10 @@ def main():
                 print("event type: {}"),format(evt.type)
                 print(evt.type)
                 tl = evt.get_abs(2)[0]
-                if tl != 0
+                if tl != 0:
                     print(tl)
                     readValues.append(tl)
-                    if myCount == 5
+                    if myCount == 5:
                         break
 
         except IOError as e:
