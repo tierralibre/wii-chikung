@@ -66,7 +66,7 @@
 
             //t2 = setInterval(function () {
          this.callAdd2  = function (){
-               connection._session.call('com.example.add2', [x, 18]).then(
+               connection.session.call('com.example.add2', [x, 18]).then(
                   function (res) {
                      console.log("add2() result:", res);
                   },
@@ -80,7 +80,7 @@
 
          this.publishHello = function () {
 
-               connection._session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
+               connection.session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
                console.log("published to topic 'com.example.onhello'");
             };
 
@@ -90,7 +90,7 @@
          connection.onopen = function (session, details) {
 
             console.log("Connected");
-            this._session = session;
+            //this._session = session;
 
             // SUBSCRIBE to a topic and receive events
             //
