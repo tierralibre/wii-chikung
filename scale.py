@@ -183,7 +183,7 @@ def client_proc(server, n, coro=None):
         tr = event.get_abs(0)[0]
         br = event.get_abs(3)[0]
         bl = event.get_abs(1)[0]
-        yield (tl,tr,br,bl)
+        #yield (tl,tr,br,bl)
         server.send('tl: {} tr: {} br: {} bl: {}'.format(tl, tr, br, bl))
 
 
