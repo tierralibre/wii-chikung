@@ -50,6 +50,8 @@
 
          // the WAMP connection to the Router
          //
+         var _session;
+
          var connection = new autobahn.Connection({
             url: wsuri,
             realm: "realm1"
@@ -60,12 +62,29 @@
          //
          var t1, t2;
 
+         var x = 0;
+
+            //t2 = setInterval(function () {
+         this.callAdd2  = function (){
+               this._session.call('com.example.add2', [x, 18]).then(
+                  function (res) {
+                     console.log("add2() result:", res);
+                  },
+                  function (err) {
+                     console.log("add2() error:", err);
+                  }
+               );
+
+               x += 3;
+            };
+
 
          // fired when connection is established and session attached
          //
          connection.onopen = function (session, details) {
 
             console.log("Connected");
+            this._session = session;
 
             // SUBSCRIBE to a topic and receive events
             //
@@ -112,24 +131,9 @@
 
             // CALL a remote procedure every second
             //
-            var x = 0;
-
-            //t2 = setInterval(function () {
-            function callAdd2(){
-               session.call('com.example.add2', [x, 18]).then(
-                  function (res) {
-                     console.log("add2() result:", res);
-                  },
-                  function (err) {
-                     console.log("add2() error:", err);
-                  }
-               );
-
-               x += 3;
-            }
 
             //}, 1000);
-         //};
+         };
 
 
          // fired when connection was lost (or could not be established)
