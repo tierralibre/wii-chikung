@@ -129,7 +129,7 @@ class AppSession(ApplicationSession):
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
-                        counter = 1
+                        counter = "Board Found"
                         sendHello = True
                         break
                     
@@ -143,25 +143,26 @@ class AppSession(ApplicationSession):
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
-        while sendHello:
+        while True
 
             # PUBLISH an event
             #
-            yield self.publish('com.example.oncounter', counter)
-            self.log.info("published to 'oncounter' with counter {counter}",
-                          counter=counter)
-            counter += 1
+            if sendHello == True:
+                yield self.publish('com.example.oncounter', counter)
+                self.log.info("published to 'oncounter' with counter {counter}",
+                            counter=counter)
+                counter += 1
 
             # CALL a remote procedure
             #
-            try:
-                res = yield self.call('com.example.mul2', counter, 3)
-                self.log.info("mul2() called lcoally with result: {result}",
-                              result=res)
-            except ApplicationError as e:
-                # ignore errors due to the frontend not yet having
-                # registered the procedure we would like to call
-                if e.error != 'wamp.error.no_such_procedure':
-                    raise e
+            # try:
+            #     res = yield self.call('com.example.mul2', counter, 3)
+            #     self.log.info("mul2() called lcoally with result: {result}",
+            #                   result=res)
+            # except ApplicationError as e:
+            #     # ignore errors due to the frontend not yet having
+            #     # registered the procedure we would like to call
+            #     if e.error != 'wamp.error.no_such_procedure':
+            #         raise e
 
             yield sleep(1)
