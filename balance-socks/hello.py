@@ -130,6 +130,7 @@ class AppSession(ApplicationSession):
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
                         counter = 1
+                        sendHello = True
                         break
                     
             #return true
