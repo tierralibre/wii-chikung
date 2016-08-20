@@ -224,33 +224,37 @@ def main():
     readValues = []
     myCount = 0
     while True:
-        p.poll()
-        try:
-            _iface.dispatch(evt)
-            if evt.type == xwiimote.EVENT_KEY:
-                code, state = evt.get_key()
-                print("key: {}"),format(code)
-                print("state: {}"),format(state)
-                n+=1
-            elif evt.type == xwiimote.EVENT_GONE:
-                print("Gone")
-                n = 2
-            elif evt.type == xwiimote.EVENT_WATCH:
-                print("Watch")
-            else:
-                print("event type: {}"),format(evt.type)
-                print(evt.type)
-                tl = evt.get_abs(2)[0]
-                if tl != 0:
-                    print(tl)
-                    readValues.append(tl)
-                    if myCount == 5:
-                        break
-                    myCount += 1
+        while True:
+            p.poll()
+            try:
+                _iface.dispatch(evt)
+                if evt.type == xwiimote.EVENT_KEY:
+                    code, state = evt.get_key()
+                    print("key: {}"),format(code)
+                    print("state: {}"),format(state)
+                    n+=1
+                elif evt.type == xwiimote.EVENT_GONE:
+                    print("Gone")
+                    n = 2
+                elif evt.type == xwiimote.EVENT_WATCH:
+                    print("Watch")
+                else:
+                    #print("event type: {}"),format(evt.type)
+                    #print(evt.type)
+                    tl = evt.get_abs(2)[0]
+                    if tl != 0:
+                        #print(tl)
+                        readValues.append(tl)
+                        if myCount == 5:
+                            break
+                        myCount += 1
 
-        except IOError as e:
-            if e.errno != errno.EAGAIN:
-                print("Bad")
+            except IOError as e:
+                if e.errno != errno.EAGAIN:
+                    print("Bad")
+
+        time.sleep(2)
+
     
     #print(_iface.get_fd())
     
