@@ -56,9 +56,7 @@ class AppSession(ApplicationSession):
 
     ###
     ### balance board
-    @inlineCallbacks
-    def test_me:
-        yield print("test_me")
+
     ###
 
     @inlineCallbacks
@@ -67,7 +65,7 @@ class AppSession(ApplicationSession):
         
         #
         #device = wait_for_balanceboard()
-        test_me()
+       
         ### end balance board
 
         # SUBSCRIBE to a topic and receive events
@@ -103,7 +101,7 @@ class AppSession(ApplicationSession):
             #
             try:
                 res = yield self.call('com.example.mul2', counter, 3)
-                self.log.info("mul2() called with result: {result}",
+                self.log.info("mul2() called lcoally with result: {result}",
                               result=res)
             except ApplicationError as e:
                 # ignore errors due to the frontend not yet having
