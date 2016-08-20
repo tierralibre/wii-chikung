@@ -221,7 +221,7 @@ def main():
 
     evt = xwiimote.event()
     n = 0
-    while n < 2:
+    while True:
         p.poll()
         try:
             _iface.dispatch(evt)
@@ -238,6 +238,8 @@ def main():
             else:
                 print("event type: {}"),format(evt.type)
                 print(evt.type)
+                tl = event.get_abs(2)[0]
+                print(tl)
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
