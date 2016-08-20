@@ -231,10 +231,10 @@ def main():
     #                 exit = True
     #                 break
 
-        try:
+        # try:
 
-        except KeyboardInterrupt:
-            print("Bye!")
+        # except KeyboardInterrupt:
+        #     print("Bye!")
 
     print("closing device iface")
     _iface.close(xwiimote.IFACE_BALANCE_BOARD)
