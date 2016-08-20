@@ -231,7 +231,7 @@ def main():
     #                 exit = True
     #                 break
 
-
+        try:
 
         except KeyboardInterrupt:
             print("Bye!")
