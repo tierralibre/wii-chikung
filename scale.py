@@ -167,14 +167,14 @@ def server_proc(coro=None):
 
 
 
-def client_proc(server, n, coro=None):
+def client_proc(server, n, coro=None, iface):
     #global msg_id
     ready = True
-    p = select.epoll.fromfd(_iface.get_fd())
+    p = select.epoll.fromfd(iface.get_fd())
     while ready:
         p.poll() # blocks
         event = xwiimote.event()
-        _iface.dispatch(event)
+        iface.dispatch(event)
 
         tl = event.get_abs(2)[0]
     #print("tl")
@@ -207,13 +207,13 @@ def main():
     iface = xwiimote.iface(device)
     _iface = iface
 
-    _iface.open(xwiimote.IFACE_BALANCE_BOARD)
+    iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
 
        # test asyncoro
     server = asyncoro.Coro(server_proc)
     #for i in range(10):
-    asyncoro.Coro(client_proc, server, 1)
+    asyncoro.Coro(client_proc, server, 1, iface)
     # end asyncoro
  
     
