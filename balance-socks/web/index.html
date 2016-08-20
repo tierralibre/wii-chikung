@@ -50,7 +50,7 @@
 
          // the WAMP connection to the Router
          //
-         var _session;
+         //var _session;
 
          var connection = new autobahn.Connection({
             url: wsuri,
@@ -66,7 +66,7 @@
 
             //t2 = setInterval(function () {
          this.callAdd2  = function (){
-               this._session.call('com.example.add2', [x, 18]).then(
+               connection._session.call('com.example.add2', [x, 18]).then(
                   function (res) {
                      console.log("add2() result:", res);
                   },
@@ -80,7 +80,7 @@
 
          this.publishHello = function () {
 
-               _session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
+               connection._session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
                console.log("published to topic 'com.example.onhello'");
             };
 
