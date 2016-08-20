@@ -78,6 +78,12 @@
                x += 3;
             };
 
+         this.publishHello = function () {
+
+               session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
+               console.log("published to topic 'com.example.onhello'");
+            };
+
 
          // fired when connection is established and session attached
          //
@@ -104,11 +110,7 @@
 
             // PUBLISH an event every second
             //
-            t1 = setInterval(function () {
-
-               session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);
-               console.log("published to topic 'com.example.onhello'");
-            }, 1000);
+   
 
 
             // REGISTER a procedure for remote calling
