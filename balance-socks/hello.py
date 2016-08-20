@@ -35,6 +35,10 @@ from autobahn.twisted.wamp import ApplicationSession
 from autobahn.wamp.exception import ApplicationError
 
 import xwiimote
+import time
+import sys
+import select
+import subprocess
 
 ###
 
