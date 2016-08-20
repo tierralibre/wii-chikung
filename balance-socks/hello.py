@@ -108,6 +108,7 @@ class AppSession(ApplicationSession):
 
         def wait_for_balanceboard(x, y):
             #print("Waiting for balanceboard to connect..")
+            global sendHello
             self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
             mon = xwiimote.monitor(True, False)
             dev = None
@@ -144,10 +145,11 @@ class AppSession(ApplicationSession):
         #
         counter = 0
         while True:
-
+            self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
             if sendHello == True:
+                self.log.info("sendHello true")
                 yield self.publish('com.example.oncounter', counter)
                 self.log.info("published to 'oncounter' with counter {counter}",
                             counter=counter)
