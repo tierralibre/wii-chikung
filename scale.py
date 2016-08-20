@@ -21,6 +21,7 @@ import random
 #import sqlalqchemy 
 # global bars
 conn = None
+self = None
 
 class RingBuffer():
     def __init__(self, length):
