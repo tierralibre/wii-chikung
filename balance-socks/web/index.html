@@ -114,8 +114,8 @@
             //
             var x = 0;
 
-            t2 = setInterval(function () {
-
+            //t2 = setInterval(function () {
+            function callAdd2(){
                session.call('com.example.add2', [x, 18]).then(
                   function (res) {
                      console.log("add2() result:", res);
@@ -126,8 +126,10 @@
                );
 
                x += 3;
-            }, 1000);
-         };
+            }
+
+            //}, 1000);
+         //};
 
 
          // fired when connection was lost (or could not be established)
