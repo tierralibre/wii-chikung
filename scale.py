@@ -187,7 +187,9 @@ def main():
     print("iface.open balanceboard")
 
     # test asyncoro
-
+    server = asyncoro.Coro(server_proc)
+    for i in range(10):
+        asyncoro.Coro(client_proc, server, i)
     # end asyncoro
     
     exit = False
