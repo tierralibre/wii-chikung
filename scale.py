@@ -236,7 +236,7 @@ def main():
             elif evt.type == xwiimote.EVENT_WATCH:
                 print("Watch")
             else:
-                print("event type: {}"),format(event.type)
+                print("event type: {}"),format(evt.type)
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
