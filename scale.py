@@ -168,7 +168,7 @@ def server_proc(coro=None):
 
 
 def client_proc(server, n, coro=None):
-    global msg_id
+    #global msg_id
     ready = True
     p = select.epoll.fromfd(_iface.get_fd())
     while ready:
@@ -212,7 +212,7 @@ def main():
        # test asyncoro
     server = asyncoro.Coro(server_proc)
     #for i in range(10):
-    asyncoro.Coro(client_proc, server, i)
+    asyncoro.Coro(client_proc, server)
     # end asyncoro
  
     
