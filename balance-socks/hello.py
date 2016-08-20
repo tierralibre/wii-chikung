@@ -49,8 +49,6 @@ from autobahn.wamp.exception import ApplicationError
 
 ###
 
-def test_me:
-    print("test_me")
 
 class AppSession(ApplicationSession):
 
@@ -58,8 +56,9 @@ class AppSession(ApplicationSession):
 
     ###
     ### balance board
-
- 
+    @inlineCallbacks
+    def test_me:
+        yield print("test_me")
     ###
 
     @inlineCallbacks
