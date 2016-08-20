@@ -212,6 +212,7 @@ def main():
     print("iface.open balanceboard")
     event = xwiimote.event()
     _iface.dispatch(event)
+    print(event)
 
        # test asyncoro
     #server = asyncoro.Coro(server_proc)
