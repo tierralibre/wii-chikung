@@ -112,7 +112,7 @@ class AppSession(ApplicationSession):
             while True:
                 mon.get_fd(True) # blocks
                 connected = mon.poll()
-                 self.log.info("in for balance while loop" )
+                self.log.info("in for balance while loop" )
 
                 if connected == None:
                     continue
