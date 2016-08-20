@@ -48,6 +48,8 @@ from autobahn.wamp.exception import ApplicationError
 
 ###
 
+def test_me:
+    print("test_me")
 
 class AppSession(ApplicationSession):
 
@@ -55,7 +57,7 @@ class AppSession(ApplicationSession):
 
     ###
     ### balance board
-    
+
  
     ###
 
@@ -65,7 +67,7 @@ class AppSession(ApplicationSession):
         
         #
         #device = wait_for_balanceboard()
-
+        test_me()
         ### end balance board
 
         # SUBSCRIBE to a topic and receive events
