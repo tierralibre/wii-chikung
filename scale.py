@@ -13,6 +13,14 @@ import numpy
 import xwiimote
 
 import util
+import asyncoro
+import random
+
+#import pysqlite2
+#import sqlite3
+#import sqlalqchemy 
+# global bars
+conn = None
 
 class RingBuffer():
     def __init__(self, length):
@@ -93,6 +101,26 @@ def print_bboard_measurements(*args):
     print()
     print()
 
+def store_bboard_measurements(*args):
+    sm = format_measurement(sum(args))
+    tl, tr, bl, br = map(format_measurement, args)
+
+    # 
+
+    print("┌","─" * 21, "┐", sep="")
+    print("│"," " * 8, "{:>5}".format(sm)," " * 8, "│", sep="")
+    print("├","─" * 10, "┬", "─" * 10, "┤", sep="")
+    print("│tl {:^10}│tr {:^10}│".format(tl, tr))
+    print("│"," " * 10, "│", " " * 10, "│", sep="")
+    print("│"," " * 10, "│", " " * 10, "│", sep="")
+    print("│bl {:^10}│ br {:^10}│".format(bl, br))
+    print("└","─" * 10, "┴", "─" * 10, "┘", sep="")
+
+    print()
+    print()
+
+
+
 def measurements(iface):
     p = select.epoll.fromfd(iface.get_fd())
     print("measurements def iface")
@@ -128,6 +156,25 @@ def average_mesurements(ms, max_stddev=55):
             print("yield of average_measurements called")
             yield numpy.array((mean, stddev))
 
+
+##
+def server_proc(coro=None):
+    coro.set_daemon()
+    while True:
+        msg = yield coro.receive()
+        print("Message received: {}"),format(msg)
+
+msg_id = 0
+
+def client_proc(server, n, coro=None):
+    global msg_id
+    for x in range(3):
+        yield coro.suspend(random.uniform(0.5,3))
+        msg_id += 1
+        server.send('%d: %d / %d' % (msg_id, n, x))
+
+
+##
 def main():
 
     if len(sys.argv) == 2:
@@ -138,6 +185,10 @@ def main():
     iface = xwiimote.iface(device)
     iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
+
+    # test asyncoro
+
+    # end asyncoro
     
     exit = False
 
@@ -157,9 +208,9 @@ def main():
         except KeyboardInterrupt:
             print("Bye!")
 
-    print("out of while loop")
+    print("closing device iface")
     iface.close(xwiimote.IFACE_BALANCE_BOARD)
-    print("closing device")
+    print("bt disconnect device")
     subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
     #subprocess.call(arg1)
     # poll unregisterp.unregister(mon_fd)
