@@ -160,7 +160,7 @@ class AppSession(ApplicationSession):
         #
         counter = 0
         while True:
-            self.log.info("inside while loop publish oncounter")
+            #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
             if sendHello == True:
