@@ -70,6 +70,7 @@ class AppSession(ApplicationSession):
 
         # SUBSCRIBE to a topic and receive events
         #
+        sendHello = False
         def onhello(msg):
             self.log.info("event for 'onhello' received: {msg}", msg=msg)
 
@@ -88,7 +89,7 @@ class AppSession(ApplicationSession):
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
-        while True:
+        while sendHello:
 
             # PUBLISH an event
             #
