@@ -143,7 +143,7 @@ class AppSession(ApplicationSession):
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
-        while True
+        while True:
 
             # PUBLISH an event
             #
