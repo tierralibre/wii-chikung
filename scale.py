@@ -21,7 +21,7 @@ import random
 #import sqlalqchemy 
 # global bars
 conn = None
-self._iface = None
+_iface = None
 
 class RingBuffer():
     def __init__(self, length):
@@ -204,7 +204,7 @@ def main():
         device = wait_for_balanceboard()
 
     iface = xwiimote.iface(device)
-    self._iface = iface
+    _iface = iface
 
     _iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
