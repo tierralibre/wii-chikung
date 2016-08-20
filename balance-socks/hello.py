@@ -170,13 +170,17 @@ class AppSession(ApplicationSession):
             if self._sendBalanceData == True:
                 self.log.info("sendHello true")
                 p = select.epoll.fromfd(self._iface.get_fd())
-                p.poll() # blocks
-                event = xwiimote.event()
-                self.iface.dispatch(event)
-                tl = event.get_abs(2)[0]
-                yield self.publish('com.example.oncounter', tl)
-                self.log.info("published to 'oncounter' with counter {counter}",
-                            counter=tl)
+                while True:
+                    p.poll() # blocks
+                    event = xwiimote.event()
+                    self.iface.dispatch(event)
+                    tl = event.get_abs(2)[0]
+                    self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
+
+                    yield self.publish('com.example.oncounter', tl)
+                    self.log.info("published to 'oncounter' with counter {counter}",
+                                counter=tl)
+                
                 counter += 1
 
             # CALL a remote procedure
