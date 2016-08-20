@@ -240,7 +240,7 @@ def main():
 
         except IOError as e:
             if e.errno != errno.EAGAIN:
-                print "Bad"
+                print("Bad")
     
     #print(_iface.get_fd())
     
