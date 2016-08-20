@@ -219,12 +219,12 @@ def main():
     p = poll()
     p.register(fd, POLLIN)  
 
-    event = xwiimote.event()
+    evt = xwiimote.event()
     n = 0
     while n < 2:
         p.poll()
         try:
-            _iface.dispatch(event)
+            _iface.dispatch(evt)
             if evt.type == xwiimote.EVENT_KEY:
                 code, state = evt.get_key()
                 print("key: {}"),format(code)
