@@ -116,11 +116,11 @@ class AppSession(ApplicationSession):
 
                 if connected == None:
                     continue
-                else
+                else:
                     # so wea are connected
                     time.sleep(2) # if we check the devtype to early it is reported as 'unknown' :(
                     iface = xwiimote.iface(connected)
-                    if iface.get_devtype() == 'balanceboard'
+                    if iface.get_devtype() == 'balanceboard':
                         yield self.publish('com.example.oncounter', "balanceBoard connected")
                         break
                     
