@@ -91,6 +91,19 @@
                x += 3;
             };
 
+         this.callBalanceDisconnect  = function (){
+               connection.session.call('com.example.balance.disconnect').then(
+                  function (res) {
+                     console.log("callBalanceDisconnect() result:", res);
+                  },
+                  function (err) {
+                     console.log("callBalanceDisconnect() error:", err);
+                  }
+               );
+
+               x += 3;
+            };
+
          this.publishHello = function () {
 
                connection.session.publish('com.example.onhello', ['Hello from JavaScript (browser)']);

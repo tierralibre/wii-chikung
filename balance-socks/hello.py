@@ -61,6 +61,7 @@ class AppSession(ApplicationSession):
     log = Logger()
     dev = None
     mon = None
+    _iface = None
 
     ###
     ### balance board
@@ -109,6 +110,7 @@ class AppSession(ApplicationSession):
         def wait_for_balanceboard(x, y):
             #print("Waiting for balanceboard to connect..")
             global sendHello
+            global _iface
             self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
             mon = xwiimote.monitor(True, False)
             dev = None
@@ -130,6 +132,7 @@ class AppSession(ApplicationSession):
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
+                        _iface = iface
                         counter = "Board Found"
                         sendHello = True
                         break
@@ -139,6 +142,18 @@ class AppSession(ApplicationSession):
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
+        ###
+        def disconnect_balanceboard():
+            self.log.info("closing device iface")
+            _iface.close(xwiimote.IFACE_BALANCE_BOARD)
+            self.log.info("bt disconnect device")
+            subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
+            return "Done"
+
+        yield self.register(disconnect_balanceboard, 'com.example.balance.disconnect')
+        self.log.info("procedure disconnect_balanceboard() registered")
+        ####
+
         ###
 
         # PUBLISH and CALL every second .. forever
