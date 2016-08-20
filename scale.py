@@ -208,14 +208,43 @@ def main():
 
     _iface = xwiimote.iface(device)
 
-    _iface.open(xwiimote.IFACE_BALANCE_BOARD)
-    print("iface.open balanceboard")
-    event = xwiimote.event()
-    while True:
-        print(_iface.get_fd())
     
-    _iface.dispatch(event)
-    print(event)
+    print("iface.open balanceboard")
+    fd = _iface.get_fd()
+    print("fd: {}"),format(fd)
+    print("opened mask: {}"),format(_iface.opened)
+    _iface.open(xwiimote.IFACE_BALANCE_BOARD)
+    #_iface.open(devi.available() | xwiimote.IFACE_WRITABLE)
+    print("opened mask: {}"),format(_iface.opened)
+    p = poll()
+    p.register(fd, POLLIN)  
+
+    event = xwiimote.event()
+    n = 0
+    while n < 2:
+        p.poll()
+        try:
+            _iface.dispatch(event)
+            if evt.type == xwiimote.EVENT_KEY:
+                code, state = evt.get_key()
+                print("key: {}"),format(code)
+                print("state: {}"),format(state)
+                n+=1
+            elif evt.type == xwiimote.EVENT_GONE:
+                print("Gone")
+                n = 2
+            elif evt.type == xwiimote.EVENT_WATCH:
+                print("Watch")
+            else:
+                print("event type: {}"),format(event.type)
+
+        except IOError as e:
+            if e.errno != errno.EAGAIN:
+                print "Bad"
+    
+    #print(_iface.get_fd())
+    
+
 
        # test asyncoro
     #server = asyncoro.Coro(server_proc)
