@@ -92,6 +92,20 @@
                x += 3;
             };
 
+         this.callBalanceMonitor  = function (){
+               console.log("callBalanceMonitor() waiting for board connection");
+               connection.session.call('com.example.balance.monitor').then(
+                  function (res) {
+                     console.log("callBalanceMonitor() result:", res);
+                  },
+                  function (err) {
+                     console.log("callBalanceMonitor() error:", err);
+                  }
+               );
+
+               x += 3;
+            };
+
          this.callBalanceDisconnect  = function (){
                connection.session.call('com.example.balance.disconnect').then(
                   function (res) {
