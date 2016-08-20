@@ -170,7 +170,8 @@ def server_proc(coro=None):
 def client_proc(server, n, coro=None, iface):
     #global msg_id
     ready = True
-    p = select.epoll.fromfd(iface.get_fd())
+    global _iface
+    p = select.epoll.fromfd(_iface.get_fd())
     while ready:
         p.poll() # blocks
         event = xwiimote.event()
@@ -213,7 +214,7 @@ def main():
        # test asyncoro
     server = asyncoro.Coro(server_proc)
     #for i in range(10):
-    asyncoro.Coro(client_proc, server, 1, iface)
+    asyncoro.Coro(client_proc, server, 1)
     # end asyncoro
  
     
