@@ -173,7 +173,9 @@ class AppSession(ApplicationSession):
                 while True:
                     p.poll() # blocks
                     event = xwiimote.event()
-                    self.iface.dispatch(event)
+                    self.log.info("after xwiimote event creation")
+                    self._iface.dispatch(event)
+                    self.log.info("dispatch event")
                     tl = event.get_abs(2)[0]
                     self.log.info("published to 'oncounter' with counter {tl}", tl=tl)
 
