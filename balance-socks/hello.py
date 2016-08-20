@@ -53,10 +53,8 @@ class AppSession(ApplicationSession):
 
     log = Logger()
 
-    @inlineCallbacks
-    def onJoin(self, details):
-
-        ### balance board
+    ###
+    ### balance board
         def wait_for_balanceboard():
             print("Waiting for balanceboard to connect..")
             mon = xwiimote.monitor(True, False)
@@ -77,6 +75,12 @@ class AppSession(ApplicationSession):
                     print("Waiting..")
 
             return dev
+    ###
+
+    @inlineCallbacks
+    def onJoin(self, details):
+
+        
         #
         device = wait_for_balanceboard()
 
