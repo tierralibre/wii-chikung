@@ -173,18 +173,18 @@ def client_proc(server, n, coro=None):
     global _iface
     p = select.epoll.fromfd(_iface.get_fd())
     #while ready:
-        p.poll() # blocks
-        event = xwiimote.event()
-        _iface.dispatch(event)
+    p.poll() # blocks
+    event = xwiimote.event()
+    _iface.dispatch(event)
 
-        tl = event.get_abs(2)[0]
+    tl = event.get_abs(2)[0]
     #print("tl")
     #print(tl)
-        tr = event.get_abs(0)[0]
-        br = event.get_abs(3)[0]
-        bl = event.get_abs(1)[0]
-        yield (tl,tr,br,bl) # if not error this is not a generator
-        server.send('tl: {} tr: {} br: {} bl: {}'.format(tl, tr, br, bl))
+    tr = event.get_abs(0)[0]
+    br = event.get_abs(3)[0]
+    bl = event.get_abs(1)[0]
+    yield (tl,tr,br,bl) # if not error this is not a generator
+    server.send('tl: {} tr: {} br: {} bl: {}'.format(tl, tr, br, bl))
 
 
 
