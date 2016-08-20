@@ -210,11 +210,13 @@ def main():
 
     _iface.open(xwiimote.IFACE_BALANCE_BOARD)
     print("iface.open balanceboard")
+    event = xwiimote.event()
+    _iface.dispatch(event)
 
        # test asyncoro
-    server = asyncoro.Coro(server_proc)
+    #server = asyncoro.Coro(server_proc)
     #for i in range(10):
-    asyncoro.Coro(client_proc, server, 1)
+    #asyncoro.Coro(client_proc, server, 1)
     # end asyncoro
  
     
