@@ -167,7 +167,7 @@ def server_proc(coro=None):
 
 
 
-def client_proc(server, n, coro=None, iface):
+def client_proc(server, n, coro=None):
     #global msg_id
     ready = True
     global _iface
@@ -175,7 +175,7 @@ def client_proc(server, n, coro=None, iface):
     while ready:
         p.poll() # blocks
         event = xwiimote.event()
-        iface.dispatch(event)
+        _iface.dispatch(event)
 
         tl = event.get_abs(2)[0]
     #print("tl")
