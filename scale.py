@@ -171,6 +171,7 @@ def client_proc(server, n, coro=None):
     for x in range(3):
         yield coro.suspend(random.uniform(0.5,3))
         msg_id += 1
+        print("client_proc send: {}"),format(msg_id)
         server.send('%d: %d / %d' % (msg_id, n, x))
 
 
