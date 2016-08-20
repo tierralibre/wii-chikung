@@ -164,15 +164,34 @@ def server_proc(coro=None):
         msg = yield coro.receive()
         print("Message received: {}"),format(msg)
 
-msg_id = 0
+
 
 def client_proc(server, n, coro=None):
     global msg_id
-    for x in range(3):
-        yield coro.suspend(random.uniform(0.5,3))
-        msg_id += 1
-        print("client_proc send: {}"),format(msg_id)
-        server.send('%d: %d / %d' % (msg_id, n, x))
+    ready = True
+    p = select.epoll.fromfd(iface.get_fd())
+    while ready:
+        p.poll() # blocks
+        event = xwiimote.event()
+        iface.dispatch(event)
+
+        tl = event.get_abs(2)[0]
+    #print("tl")
+    #print(tl)
+        tr = event.get_abs(0)[0]
+        br = event.get_abs(3)[0]
+        bl = event.get_abs(1)[0]
+        server.send('tl: {} tr: {} br: {} bl: {}'.format(tl, tr, br, bl))
+
+
+
+
+    # for x in range(3):
+    #     yield coro.suspend(random.uniform(0.5,3))
+    #     msg_id += 1
+    #     print("client_proc send: {}"),format(msg_id)
+    #     server.send('%d: %d / %d' % (msg_id, n, x))
+    #     server.send('{} {}'.format(msg_id, 'two'))
 
 
 ##
