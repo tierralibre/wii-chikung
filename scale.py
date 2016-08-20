@@ -238,7 +238,7 @@ def main():
             else:
                 print("event type: {}"),format(evt.type)
                 print(evt.type)
-                tl = event.get_abs(2)[0]
+                tl = evt.get_abs(2)[0]
                 print(tl)
 
         except IOError as e:
