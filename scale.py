@@ -213,7 +213,7 @@ def main():
        # test asyncoro
     server = asyncoro.Coro(server_proc)
     #for i in range(10):
-    asyncoro.Coro(client_proc, server)
+    asyncoro.Coro(client_proc, server, 1)
     # end asyncoro
  
     
