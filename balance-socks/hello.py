@@ -125,7 +125,7 @@ class AppSession(ApplicationSession):
                         break
                     
 
-            return conn
+            yield conn
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
