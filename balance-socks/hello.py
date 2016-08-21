@@ -193,7 +193,7 @@ class AppSession(ApplicationSession):
             self.log.info("printData callback")
             self.log.info(d)
             yield self.publish('com.example.balance.data', d)
-            print("published to 'balance.data' with values {}".format(d))
+            print("published to 'balance.data' with values")
 
         @inlineCallbacks
         def readBalanceData():
