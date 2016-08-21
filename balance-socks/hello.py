@@ -148,13 +148,15 @@ class AppSession(ApplicationSession):
         self.log.info("procedure wait_for_balanceboard() registered")
         ###
 
+        @inlineCallbacks
         def disconnect_balanceboard():
             self.log.info("closing device iface")
-            #self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
+            #check if iface is opened?
+            self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             self.log.info("bt disconnect device")
             subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
             self._sendBalanceData = False
-            return "Done"
+            yield "Done"
 
         yield self.register(disconnect_balanceboard, 'com.example.balance.disconnect')
         self.log.info("procedure disconnect_balanceboard() registered")
