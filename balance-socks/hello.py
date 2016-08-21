@@ -65,6 +65,7 @@ class AppSession(ApplicationSession):
     _iface = None
     _connected = None
     _sendBalanceData = False
+    _disconnect = False
 
     ###
     ### balance board
@@ -149,6 +150,7 @@ class AppSession(ApplicationSession):
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             self.log.info("bt disconnect device")
             subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
+            self._disconnect = True
             self._sendBalanceData = False
             yield "Done"
 
@@ -235,6 +237,12 @@ class AppSession(ApplicationSession):
         #
         counter = 0
         while True:
+            # stop sending balance data after disconnect
+            # this is needed to get out of the loop and deferred data
+            # maybe a better way to do this 
+            if self._disconnect = True:
+                break
+
             #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
