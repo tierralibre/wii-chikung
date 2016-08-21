@@ -26,6 +26,7 @@
 #
 ###############################################################################
 from __future__ import print_function
+from __future__ import division
 
 from twisted.internet.defer import inlineCallbacks, returnValue
 from twisted.logger import Logger
@@ -203,6 +204,10 @@ class AppSession(ApplicationSession):
             p.register(fd, POLLIN)  
 
             evt = xwiimote.event()
+            tlValues = []
+            trValues = []
+            brValues = []
+            blValues = []
             readValues = []
             ## this is our buffer of values to read
             ## to average our resolution?
@@ -216,9 +221,17 @@ class AppSession(ApplicationSession):
                     self._iface.dispatch(evt)
                     #self.log.info("dispac")
                     tl = evt.get_abs(2)[0]
-                    if tl != 0:
+                    tr = event.get_abs(0)[0]
+                    br = event.get_abs(3)[0]
+                    bl = event.get_abs(1)[0]
+                    if tl != 0 or tr != 0 or br != 0 or bl != 0:
                     #print(tl)
-                        readValues.append(tl)
+
+                        tlValues.append(tl)
+                        trValues.append(tr)
+                        brValues.append(br)
+                        blValues.append(bl)
+
                         if myCount == 5:
                             break
                         myCount += 1
@@ -231,6 +244,17 @@ class AppSession(ApplicationSession):
             #self.log.info("balance values read")
             # if self._disconnect == True:
             #     returnValue(json.dumps("disconnected"))
+            # average values and get into readValues
+            # this could go into a function ...
+            tlAv = sum(tlValues)/len(tlValues)
+            readValues.append(tlAv)
+            trAv = sum(trValues)/len(trValues)
+            readValues.append(trAv)
+            brAv = sum(brValues)/len(brValues)
+            readValues.append(brAv)
+            blAv = sum(blValues)/len(blValues)
+            readValues.append(blAv)
+
 
             if len(readValues) == 0:
             #     # how quickly we check again
