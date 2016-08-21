@@ -208,7 +208,7 @@ class AppSession(ApplicationSession):
             trValues = []
             brValues = []
             blValues = []
-            readValues = []
+            readValues = {}
             ## this is our buffer of values to read
             ## to average our resolution?
             myCount = 0
@@ -247,14 +247,16 @@ class AppSession(ApplicationSession):
             #     returnValue(json.dumps("disconnected"))
             # average values and get into readValues
             # this could go into a function ...
+            # change to dict
             tlAv = sum(tlValues)/len(tlValues)
-            readValues.append(tlAv)
+            readValues['tl'] = tlAv
             trAv = sum(trValues)/len(trValues)
-            readValues.append(trAv)
+            readValues['tr'] = trAv
             brAv = sum(brValues)/len(brValues)
-            readValues.append(brAv)
+            readValues['br'] = brAv
             blAv = sum(blValues)/len(blValues)
-            readValues.append(blAv)
+            readValues['bl'] = blAv
+            readValues['total_weight'] = tlAv + trAv + brAv + blAv
 
 
             if len(readValues) == 0:
