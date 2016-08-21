@@ -199,7 +199,7 @@ class AppSession(ApplicationSession):
         def readBalanceData():
             #self.log.info("readBalanceData")
             fd = self._iface.get_fd()
-            #self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
+            self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
             p = poll()
             #self.log.info("p.register called")
             p.register(fd, POLLIN)  
