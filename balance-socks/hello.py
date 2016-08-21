@@ -209,6 +209,8 @@ class AppSession(ApplicationSession):
             myCount = 0
             while True:
                 #self.log.info("start polling")
+                if self._disconnect == True:
+                    break
                 p.poll()
                 try:
                     self._iface.dispatch(evt)
