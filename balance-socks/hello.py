@@ -225,16 +225,16 @@ class AppSession(ApplicationSession):
                         print("Bad")
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
-            jsonValues = json.dumps(readValues)
-            yield jsonValues
-            # self.log.info("balance values read")
-            # if len(readValues) == 0:
-            #     yield deferredSleep(0.1)
-            # else:
-            #     jsonValues = json.dumps(readValues)
-            #     self.log.info("json values read: ")
-            #     self.log.info(jsonValues)
-            #     returnValue(jsonValues)
+            #jsonValues = json.dumps(readValues)
+            #yield jsonValues
+            self.log.info("balance values read")
+            if len(readValues) == 0:
+                yield deferredSleep(0.1)
+            else:
+                jsonValues = json.dumps(readValues)
+                self.log.info("json values read: ")
+                self.log.info(jsonValues)
+                returnValue(jsonValues)
 
         # PUBLISH and CALL every second .. forever
         #
