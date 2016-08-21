@@ -27,7 +27,7 @@
 ###############################################################################
 from __future__ import print_function
 
-from twisted.internet.defer import inlineCallbacks, returnValue. deferLater
+from twisted.internet.defer import inlineCallbacks, returnValue, deferLater
 from twisted.logger import Logger
 
 from autobahn.twisted.util import sleep
