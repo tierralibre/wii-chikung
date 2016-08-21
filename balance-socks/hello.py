@@ -112,18 +112,12 @@ class AppSession(ApplicationSession):
 
         def wait_for_balanceboard(x, y):
             #print("Waiting for balanceboard to connect..")
-            global sendHello
-            global _iface
             self.log.info("wait for balance board received: {x} and {y}", x=x, y=y)
             mon = xwiimote.monitor(True, False)
-            dev = None
-            conn = False
-            counter = 0
-            self.log.info("before wait for balance while loop" )
+
             while True:
                 mon.get_fd(True) # blocks
                 connected = mon.poll()
-                self.log.info("in for balance while loop" )
 
                 if connected == None:
                     self.log.info("wating for connection" )
@@ -137,12 +131,11 @@ class AppSession(ApplicationSession):
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
                         self.log.info("found balance board" )
                         self._iface = iface
-                        counter = "Board Found"
                         self._sendBalanceData = True
                         break
                     
             #return true
-            return counter
+            return "Board Found"
         ###
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
@@ -192,7 +185,7 @@ class AppSession(ApplicationSession):
             return deferLater(reactor, howLong, lambda: None)
 
         @inlineCallbacks
-        def printData(d):
+        def publishBalanceData(d):
             self.log.info("printData callback")
             self.log.info(d)
             yield self.publish('com.example.balance.data', d)
@@ -241,19 +234,22 @@ class AppSession(ApplicationSession):
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
-        while True:
+        while self._sendBalanceData == True:
             #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
-            if self._sendBalanceData == True:
-                self.log.info("sendHello true")
-                # send balance data on via subscription
-                self.log.info("sendHello true field readBalanceData")
-                d = readBalanceData()
-                d.addCallback(printData)
-                #self.log.info(vals)
-                #yield self.publish('com.example.oncounter', readBalanceData())
-                #print("published to 'oncounter' with counter {}".format(counter))
+            d = readBalanceData()
+            d.addCallback(publishBalanceData)
+            
+            # if self._sendBalanceData == True:
+            #     self.log.info("sendHello true")
+            #     # send balance data on via subscription
+            #     self.log.info("sendHello true field readBalanceData")
+            #     d = readBalanceData()
+            #     d.addCallback(printData)
+            #     #self.log.info(vals)
+            #     #yield self.publish('com.example.oncounter', readBalanceData())
+            #     #print("published to 'oncounter' with counter {}".format(counter))
                 
             #    counter += 1
 
@@ -268,5 +264,5 @@ class AppSession(ApplicationSession):
                 # # registered the procedure we would like to call
                 #     if e.error != 'wamp.error.no_such_procedure':
                 #         raise e
-
+            # control the loop timing?
             yield sleep(1)
