@@ -191,6 +191,8 @@ class AppSession(ApplicationSession):
         def printData(d):
             self.log.info("printData callback")
             self.log.info(d)
+            yield self.publish('com.example.oncounter', d)
+            print("published to 'oncounter' with counter {}".format(counter))
 
         @inlineCallbacks
         def readBalanceData():
@@ -223,16 +225,16 @@ class AppSession(ApplicationSession):
                         print("Bad")
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
-            #jsonValues = json.dumps(readValues)
-            #yield jsonValues
-            self.log.info("balance values read")
-            if len(readValues) == 0:
-                yield deferredSleep(0.1)
-            else:
-                jsonValues = json.dumps(readValues)
-                self.log.info("json values read: ")
-                self.log.info(jsonValues)
-                returnValue(jsonValues)
+            jsonValues = json.dumps(readValues)
+            yield jsonValues
+            # self.log.info("balance values read")
+            # if len(readValues) == 0:
+            #     yield deferredSleep(0.1)
+            # else:
+            #     jsonValues = json.dumps(readValues)
+            #     self.log.info("json values read: ")
+            #     self.log.info(jsonValues)
+            #     returnValue(jsonValues)
 
         # PUBLISH and CALL every second .. forever
         #
@@ -245,8 +247,8 @@ class AppSession(ApplicationSession):
                 self.log.info("sendHello true")
                 # send balance data on via subscription
                 self.log.info("sendHello true field readBalanceData")
-                vals = readBalanceData()
-                vals.addCallback(printData)
+                d = readBalanceData()
+                d.addCallback(printData)
                 #self.log.info(vals)
                 #yield self.publish('com.example.oncounter', readBalanceData())
                 #print("published to 'oncounter' with counter {}".format(counter))
