@@ -146,12 +146,13 @@ class AppSession(ApplicationSession):
         yield self.register(wait_for_balanceboard, 'com.example.balance')
         self.log.info("procedure wait_for_balanceboard() registered")
         ###
+
         def disconnect_balanceboard():
             self.log.info("closing device iface")
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             self.log.info("bt disconnect device")
             subprocess.call(["bt-device", "-d", "Nintendo RVL-WBC-01"])
-            elf._sendBalanceData = False
+            self._sendBalanceData = False
             return "Done"
 
         yield self.register(disconnect_balanceboard, 'com.example.balance.disconnect')
