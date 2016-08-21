@@ -224,7 +224,9 @@ class AppSession(ApplicationSession):
                     tr = evt.get_abs(0)[0]
                     br = evt.get_abs(3)[0]
                     bl = evt.get_abs(1)[0]
-                    if tl != 0 or tr != 0 or br != 0 or bl != 0:
+                    # add sensitivy 3 kg 300
+                    #if tl != 0 or tr != 0 or br != 0 or bl != 0:
+                    if tl > 300 or tr > 300 or br > 300 or bl > 300:
                     #print(tl)
                     # need to catter for sensitivity
 
