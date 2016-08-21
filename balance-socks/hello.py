@@ -37,7 +37,7 @@ from autobahn.wamp.exception import ApplicationError
 import xwiimote
 import time
 import sys
-import select
+from select import poll, POLLIN
 import subprocess
 
 ###
@@ -192,20 +192,22 @@ class AppSession(ApplicationSession):
             #
             if self._sendBalanceData == True:
                 self.log.info("sendHello true")
-                
+                # send balance data on via subscription
+                yield self.publish('com.example.oncounter', counter)
+                print("published to 'oncounter' with counter {}".format(counter))
                 
             #    counter += 1
 
             # CALL a remote procedure
             #
-                try:
-                    res = yield self.call('com.example.balance.monitor')
-                    self.log.info("mul2() called lcoally with result: {result}",
-                                  result=res)
-                except ApplicationError as e:
-                # ignore errors due to the frontend not yet having
-                # registered the procedure we would like to call
-                    if e.error != 'wamp.error.no_such_procedure':
-                        raise e
+                # try:
+                #     res = yield self.call('com.example.balance.monitor')
+                #     self.log.info("mul2() called lcoally with result: {result}",
+                #                   result=res)
+                # except ApplicationError as e:
+                # # ignore errors due to the frontend not yet having
+                # # registered the procedure we would like to call
+                #     if e.error != 'wamp.error.no_such_procedure':
+                #         raise e
 
             yield sleep(1)
