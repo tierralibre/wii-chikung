@@ -209,8 +209,8 @@ class AppSession(ApplicationSession):
             myCount = 0
             while True:
                 #self.log.info("start polling")
-                if self._disconnect == True:
-                    break
+                # if self._disconnect == True:
+                #     break
                 p.poll()
                 try:
                     self._iface.dispatch(evt)
@@ -229,8 +229,8 @@ class AppSession(ApplicationSession):
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             #self.log.info("balance values read")
-            if self._disconnect == True:
-                returnValue(json.dumps("disconnected"))
+            # if self._disconnect == True:
+            #     returnValue(json.dumps("disconnected"))
 
             if len(readValues) == 0:
             #     # how quickly we check again
