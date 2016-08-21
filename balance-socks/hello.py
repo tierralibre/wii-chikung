@@ -226,11 +226,12 @@ class AppSession(ApplicationSession):
                     bl = evt.get_abs(1)[0]
                     if tl != 0 or tr != 0 or br != 0 or bl != 0:
                     #print(tl)
+                    # need to catter for sensitivity
 
-                        tlValues.append(tl)
-                        trValues.append(tr)
-                        brValues.append(br)
-                        blValues.append(bl)
+                        tlValues.append(tl/100)
+                        trValues.append(tr/100)
+                        brValues.append(br/100)
+                        blValues.append(bl/100)
 
                         if myCount == 5:
                             break
