@@ -232,15 +232,15 @@ class AppSession(ApplicationSession):
             if self._disconnect == True:
                 returnValue(json.dumps("disconnected"))
 
-            # if len(readValues) == 0:
+            if len(readValues) == 0:
             #     # how quickly we check again
-            #     yield deferredSleep(0.1)
+                yield deferredSleep(0.1)
 
-            # else:
-            jsonValues = json.dumps(readValues)
+            else:
+                jsonValues = json.dumps(readValues)
                 #self.log.info("json values read: ")
                 #self.log.info(jsonValues)
-            returnValue(jsonValues)
+                returnValue(jsonValues)
 
         # PUBLISH and CALL every second .. forever
         #
