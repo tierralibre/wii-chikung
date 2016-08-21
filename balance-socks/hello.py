@@ -204,6 +204,8 @@ class AppSession(ApplicationSession):
 
             evt = xwiimote.event()
             readValues = []
+            ## this is our buffer of values to read
+            ## to average our resolution?
             myCount = 0
             while True:
                 #self.log.info("start polling")
@@ -226,6 +228,7 @@ class AppSession(ApplicationSession):
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             #self.log.info("balance values read")
             if len(readValues) == 0:
+                # how quickly we check again
                 yield deferredSleep(0.1)
             else:
                 jsonValues = json.dumps(readValues)
@@ -240,7 +243,7 @@ class AppSession(ApplicationSession):
             # stop sending balance data after disconnect
             # this is needed to get out of the loop and deferred data
             # maybe a better way to do this 
-            if self._disconnect = True:
+            if self._disconnect == True:
                 break
 
             #self.log.info("inside while loop publish oncounter")
