@@ -226,6 +226,7 @@ class AppSession(ApplicationSession):
                 yield deferredSleep(0.1)
             else:
                 jsonValues = json.dumps(readValues)
+                self.log.info("json values read: ")
                 self.log.info(jsonValues)
                 returnValue(jsonValues)
 
@@ -240,7 +241,7 @@ class AppSession(ApplicationSession):
                 self.log.info("sendHello true")
                 # send balance data on via subscription
                 self.log.info("sendHello true field readBalanceData")
-                vals = yield readBalanceData()
+                vals = readBalanceData()
                 self.log.info(vals)
                 yield self.publish('com.example.oncounter', readBalanceData())
                 print("published to 'oncounter' with counter {}".format(counter))
