@@ -188,6 +188,10 @@ class AppSession(ApplicationSession):
         def deferredSleep(howLong):
             return deferLater(reactor, howLong, lambda: None)
 
+        def printData(d):
+            self.log.info("printData callback")
+            self.log.info(d)
+
         @inlineCallbacks
         def readBalanceData():
             self.log.info("readBalanceData")
@@ -242,6 +246,7 @@ class AppSession(ApplicationSession):
                 # send balance data on via subscription
                 self.log.info("sendHello true field readBalanceData")
                 vals = readBalanceData()
+                vals.addCallback(printData)
                 self.log.info(vals)
                 yield self.publish('com.example.oncounter', readBalanceData())
                 print("published to 'oncounter' with counter {}".format(counter))
