@@ -188,6 +188,7 @@ class AppSession(ApplicationSession):
         def deferredSleep(howLong):
             return deferLater(reactor, howLong, lambda: None)
 
+        @inlineCallbacks
         def printData(d):
             self.log.info("printData callback")
             self.log.info(d)
