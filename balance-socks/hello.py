@@ -27,7 +27,7 @@
 ###############################################################################
 from __future__ import print_function
 
-from twisted.internet.defer import inlineCallbacks, returnValue
+from twisted.internet.defer import inlineCallbacks, returnValue. deferLater
 from twisted.logger import Logger
 
 from autobahn.twisted.util import sleep
@@ -229,9 +229,13 @@ class AppSession(ApplicationSession):
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
             #self.log.info("balance values read")
+            if self._disconnect == True:
+                returnValue(json.dumps("disconnected"))
+
             if len(readValues) == 0:
                 # how quickly we check again
                 #yield deferredSleep(0.1)
+
             elif self._disconnect == True:
                 returnValue(json.dumps("disconnected"))
             else:
