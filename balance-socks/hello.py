@@ -129,7 +129,7 @@ class AppSession(ApplicationSession):
                     #_connected = connected
                     if iface.get_devtype() == 'balanceboard':
                         #yield self.publish('com.example.oncounter', "balanceBoard connected")
-                        self.log.info("found balance board" )
+                        self.log.info("found balance board, you can step on it to send data" )
                         self._iface = iface
                         self._sendBalanceData = True
                         break
@@ -234,12 +234,15 @@ class AppSession(ApplicationSession):
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
-        while self._sendBalanceData == True:
+        while True:
             #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
             #
-            d = readBalanceData()
-            d.addCallback(publishBalanceData)
+            if self._sendBalanceData == True:
+                d = readBalanceData()
+                d.addCallback(publishBalanceData)
+            else:
+                break
             
             # if self._sendBalanceData == True:
             #     self.log.info("sendHello true")
