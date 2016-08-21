@@ -241,8 +241,8 @@ class AppSession(ApplicationSession):
             if self._sendBalanceData == True:
                 d = readBalanceData()
                 d.addCallback(publishBalanceData)
-            else:
-                break
+            # else:
+            #     break
             
             # if self._sendBalanceData == True:
             #     self.log.info("sendHello true")
