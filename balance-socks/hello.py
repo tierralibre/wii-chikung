@@ -231,7 +231,7 @@ class AppSession(ApplicationSession):
             #self.log.info("balance values read")
             if len(readValues) == 0:
                 # how quickly we check again
-                yield deferredSleep(0.1)
+                #yield deferredSleep(0.1)
             elif self._disconnect == True:
                 returnValue(json.dumps("disconnected"))
             else:
