@@ -221,9 +221,9 @@ class AppSession(ApplicationSession):
                     self._iface.dispatch(evt)
                     #self.log.info("dispac")
                     tl = evt.get_abs(2)[0]
-                    tr = event.get_abs(0)[0]
-                    br = event.get_abs(3)[0]
-                    bl = event.get_abs(1)[0]
+                    tr = evt.get_abs(0)[0]
+                    br = evt.get_abs(3)[0]
+                    bl = evt.get_abs(1)[0]
                     if tl != 0 or tr != 0 or br != 0 or bl != 0:
                     #print(tl)
 
