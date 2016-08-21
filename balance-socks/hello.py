@@ -193,12 +193,14 @@ class AppSession(ApplicationSession):
             fd = self._iface.get_fd()
             self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
             p = poll()
+            self.log.info("p.register called")
             p.register(fd, POLLIN)  
 
             evt = xwiimote.event()
             eadValues = []
             myCount = 0
             while True:
+                self.log.info("start polling")
                 p.poll()
                 try:
                     self._iface.dispatch(evt)
