@@ -39,6 +39,7 @@ import time
 import sys
 from select import poll, POLLIN
 import subprocess
+import json
 
 ###
 
@@ -184,6 +185,33 @@ class AppSession(ApplicationSession):
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
 
+        def readBalanceData():
+            self.log.info("readBalanceData")
+            self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
+            p = poll()
+            p.register(fd, POLLIN)  
+
+            evt = xwiimote.event()
+            eadValues = []
+            myCount = 0
+            while True:
+                p.poll()
+                try:
+                    self._iface.dispatch(evt)
+                    tl = evt.get_abs(2)[0]
+                    if tl != 0:
+                    #print(tl)
+                        readValues.append(tl)
+                        if myCount == 5:
+                            break
+                        myCount += 1
+
+                except IOError as e:
+                    if e.errno != errno.EAGAIN:
+                        print("Bad")
+
+            self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
+            returnValue(json.dumps(readValues))
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
@@ -194,7 +222,7 @@ class AppSession(ApplicationSession):
             if self._sendBalanceData == True:
                 self.log.info("sendHello true")
                 # send balance data on via subscription
-                yield self.publish('com.example.oncounter', counter)
+                yield self.publish('com.example.oncounter', readBalanceData())
                 print("published to 'oncounter' with counter {}".format(counter))
                 
             #    counter += 1
