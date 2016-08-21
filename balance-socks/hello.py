@@ -232,6 +232,8 @@ class AppSession(ApplicationSession):
             if len(readValues) == 0:
                 # how quickly we check again
                 yield deferredSleep(0.1)
+            elif if self._disconnect == True:
+                returnValue(json.dumps("disconnected"))
             else:
                 jsonValues = json.dumps(readValues)
                 #self.log.info("json values read: ")
@@ -245,8 +247,8 @@ class AppSession(ApplicationSession):
             # stop sending balance data after disconnect
             # this is needed to get out of the loop and deferred data
             # maybe a better way to do this 
-            if self._disconnect == True:
-                break
+            # if self._disconnect == True:
+            #     break
 
             #self.log.info("inside while loop publish oncounter")
             # PUBLISH an event
