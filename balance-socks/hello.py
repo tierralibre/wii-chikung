@@ -192,16 +192,16 @@ class AppSession(ApplicationSession):
         def printData(d):
             self.log.info("printData callback")
             self.log.info(d)
-            yield self.publish('com.example.oncounter', d)
-            print("published to 'oncounter' with counter {}".format(counter))
+            yield self.publish('com.example.balance.data', d)
+            print("published to 'balance.data' with values {}".format(d))
 
         @inlineCallbacks
         def readBalanceData():
-            self.log.info("readBalanceData")
+            #self.log.info("readBalanceData")
             fd = self._iface.get_fd()
-            self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
+            #self._iface.open(xwiimote.IFACE_BALANCE_BOARD)
             p = poll()
-            self.log.info("p.register called")
+            #self.log.info("p.register called")
             p.register(fd, POLLIN)  
 
             evt = xwiimote.event()
@@ -226,15 +226,13 @@ class AppSession(ApplicationSession):
                         print("Bad")
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
-            #jsonValues = json.dumps(readValues)
-            #yield jsonValues
-            self.log.info("balance values read")
+            #self.log.info("balance values read")
             if len(readValues) == 0:
                 yield deferredSleep(0.1)
             else:
                 jsonValues = json.dumps(readValues)
-                self.log.info("json values read: ")
-                self.log.info(jsonValues)
+                #self.log.info("json values read: ")
+                #self.log.info(jsonValues)
                 returnValue(jsonValues)
 
         # PUBLISH and CALL every second .. forever

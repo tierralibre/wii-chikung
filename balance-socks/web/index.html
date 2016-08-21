@@ -135,16 +135,16 @@
 
             // SUBSCRIBE to a topic and receive events
             //
-            function on_counter (args) {
-               var counter = args[0];
-               console.log("on_counter() event received with counter " + counter);
+            function onBalanceData (args) {
+               var balanceData = args[0];
+               console.log("onBalanceData event received with counter " + balanceData);
             }
-            session.subscribe('com.example.oncounter', on_counter).then(
+            session.subscribe('com.example.balance.data', onBalanceData).then(
                function (sub) {
-                  console.log('subscribed to topic');
+                  console.log('subscribed to topic com.example.balance.data');
                },
                function (err) {
-                  console.log('failed to subscribe to topic', err);
+                  console.log('failed to subscribe to topic com.example.balance.data', err);
                }
             );
 
