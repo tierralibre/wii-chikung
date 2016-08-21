@@ -188,6 +188,7 @@ class AppSession(ApplicationSession):
         def deferredSleep(howLong):
             return deferLater(reactor, howLong, lambda: None)
 
+        @inlineCallbacks
         def readBalanceData():
             self.log.info("readBalanceData")
             fd = self._iface.get_fd()
