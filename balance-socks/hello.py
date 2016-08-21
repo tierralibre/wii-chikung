@@ -150,6 +150,7 @@ class AppSession(ApplicationSession):
 
         @inlineCallbacks
         def disconnect_balanceboard():
+            self._sendBalanceData
             self.log.info("closing device iface")
             #check if iface is opened?
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
