@@ -247,9 +247,9 @@ class AppSession(ApplicationSession):
                 self.log.info("sendHello true field readBalanceData")
                 vals = readBalanceData()
                 vals.addCallback(printData)
-                self.log.info(vals)
-                yield self.publish('com.example.oncounter', readBalanceData())
-                print("published to 'oncounter' with counter {}".format(counter))
+                #self.log.info(vals)
+                #yield self.publish('com.example.oncounter', readBalanceData())
+                #print("published to 'oncounter' with counter {}".format(counter))
                 
             #    counter += 1
 
