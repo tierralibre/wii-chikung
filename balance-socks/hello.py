@@ -197,13 +197,14 @@ class AppSession(ApplicationSession):
             p.register(fd, POLLIN)  
 
             evt = xwiimote.event()
-            eadValues = []
+            readValues = []
             myCount = 0
             while True:
-                self.log.info("start polling")
+                #self.log.info("start polling")
                 p.poll()
                 try:
                     self._iface.dispatch(evt)
+                    #self.log.info("dispac")
                     tl = evt.get_abs(2)[0]
                     if tl != 0:
                     #print(tl)
