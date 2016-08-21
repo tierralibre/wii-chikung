@@ -185,6 +185,9 @@ class AppSession(ApplicationSession):
         yield self.register(starMonitoringBoard, 'com.example.balance.monitor')
         self.log.info("procedure starMonitoringBoard() registered")
 
+        def deferredSleep(howLong):
+            return deferLater(reactor, howLong, lambda: None)
+
         def readBalanceData():
             self.log.info("readBalanceData")
             fd = self._iface.get_fd()
@@ -212,7 +215,11 @@ class AppSession(ApplicationSession):
                         print("Bad")
 
             self._iface.close(xwiimote.IFACE_BALANCE_BOARD)
-            returnValue(json.dumps(readValues))
+            self.log.info("balance values read")
+            jsonValues = json.dumps(readValues)
+            self.log.info(jsonValues)
+            returnValue(jsonValues)
+
         # PUBLISH and CALL every second .. forever
         #
         counter = 0
@@ -223,6 +230,8 @@ class AppSession(ApplicationSession):
             if self._sendBalanceData == True:
                 self.log.info("sendHello true")
                 # send balance data on via subscription
+                vals = yield readBalanceData()
+                self.log.info(vals)
                 yield self.publish('com.example.oncounter', readBalanceData())
                 print("published to 'oncounter' with counter {}".format(counter))
                 
